@@ -23,7 +23,7 @@
 
 const entryPointCards = document.querySelector('.cards-container');
 
-const cardCreator = () => {
+const cardCreator = (article) => {
     const card = document.createElement('div');
     const headline = document.createElement('div');
     const authContainer = document.createElement('div');
@@ -43,22 +43,25 @@ const cardCreator = () => {
     imageContainer.classList.add('img-container');
     
 
-    headline.textContent = "Headline";
-    //image.src = article.authorPhoto;
-    author.textContent = "Test text";
+    headline.textContent = article.headline;
+    image.src = article.authorPhoto;
+    author.textContent = article.authorName;
 
-
+    card.addEventListener('click', () => {
+        console.log(headline.textContent);
+    }) 
+    
     return card;
 }
-const result = cardCreator();
-entryPointCards.appendChild(result);
+
 
 
 const axiosPromise = axios.get('https://lambda-times-api.herokuapp.com/articles')
 .then(response => {
     for(let i = 0; i < response.data.articles.javascript.length; i++){
         const array = response.data.articles.javascript[i];
-        console.log(array);
+        const result = cardCreator(array);
+        entryPointCards.appendChild(result);
     }
   
 })
