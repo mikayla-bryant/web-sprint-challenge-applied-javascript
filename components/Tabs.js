@@ -17,17 +17,32 @@ const topicsEntryPoint = document.querySelector('.topics');
 const tabCreator = (topic) => {
     const tab = document.createElement('div');
     tab.classList.add('tab');
-    tab.textContent = topic.topics;
+    tab.textContent = topic;
 
     return tab;
 }
 
 
-const axiosPromise = axios
+const axiosPromise = axios.get('https://lambda-times-api.herokuapp.com/topics')
+.then( response => {
+    response.data.topics.forEach( item => {
+        const newTab = tabCreator(item);
+        topicsEntryPoint.appendChild(newTab);
+    })
+})
+
+
+
+
+/*const axiosPromise = axios
                         .get('https://lambda-times-api.herokuapp.com/topics')
                         .then((res) => {
-        
-                                const newTab = tabCreator(res.data);
-                                topicsEntryPoint.appendChild(newTab);
-                            })
+                                data = JSON.parse(res);
+                                data.forEach (trending => {
+                                    const tab = 
+                                    const newTab = tabCreator(res.data.topics);
+                                    topicsEntryPoint.appendChild(newTab);
+                                })
+                                
+                            })*/
               
